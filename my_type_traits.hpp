@@ -3,6 +3,9 @@
 #include <vector>
 #include <list>
 
+template <typename T>
+struct is_string;
+
 #define USE_MY_OWN_VERSION 1
 
 #if USE_MY_OWN_VERSION
@@ -58,9 +61,8 @@ struct has_begin_end
 };
 
 template<typename T> 
-struct is_container : std::integral_constant<bool, has_const_iterator<T>::value && has_begin_end<T>::beg_value && has_begin_end<T>::end_value> { };
+struct is_container : std::integral_constant<bool, !is_string<T>::value && has_const_iterator<T>::value && has_begin_end<T>::beg_value && has_begin_end<T>::end_value> { };
 #endif  // USE_MY_OWN_VERSION
-
 
 template <typename T>
 struct is_string {
